@@ -18,24 +18,24 @@ public class Pipeline_Initials
         vertices = new List<Vector3>();
         
         //Front face
-        vertices.Add(new Vector3( -4f, 8f, 2f )); // 0
-        vertices.Add(new Vector3( -4f, -8f, 2f )); // 1
-        vertices.Add(new Vector3( 1f, -8f, 2f )); // 2
-        vertices.Add(new Vector3( 4f, -5f, 2f )); // 3
-        vertices.Add(new Vector3( -2f, -5f, 2f )); // 4
-        vertices.Add(new Vector3( -2f, 5f, 2f )); // 5
-        vertices.Add(new Vector3( 4f, 5f, 2f )); // 6
-        vertices.Add(new Vector3( 1f, 8f, 2f )); // 7
+        vertices.Add(new Vector3( -4f, 8f, -2f )); // 0
+        vertices.Add(new Vector3( -4f, -8f, -2f )); // 1
+        vertices.Add(new Vector3( 1f, -8f, -2f )); // 2
+        vertices.Add(new Vector3( 4f, -5f, -2f )); // 3
+        vertices.Add(new Vector3( -2f, -5f, -2f )); // 4
+        vertices.Add(new Vector3( -2f, 5f, -2f )); // 5
+        vertices.Add(new Vector3( 4f, 5f, -2f )); // 6
+        vertices.Add(new Vector3( 1f, 8f, -2f )); // 7
         
         //Back Face
-        vertices.Add(new Vector3( -4f, 8f, -2f )); // 8
-        vertices.Add(new Vector3( -4f, -8f, -2f )); // 9
-        vertices.Add(new Vector3( 1f, -8f, -2f )); // 10
-        vertices.Add(new Vector3( 4f, -5f, -2f )); // 11
-        vertices.Add(new Vector3( -2f, -5f, -2f )); // 12
-        vertices.Add(new Vector3( -2f, 5f, -2f )); // 13
-        vertices.Add(new Vector3( 4f, 5f, -2f )); // 14
-        vertices.Add(new Vector3( 1f, 8f, -2f )); // 15
+        vertices.Add(new Vector3( -4f, 8f, 2f )); // 8
+        vertices.Add(new Vector3( -4f, -8f, 2f )); // 9
+        vertices.Add(new Vector3( 1f, -8f, 2f )); // 10
+        vertices.Add(new Vector3( 4f, -5f, 2f )); // 11
+        vertices.Add(new Vector3( -2f, -5f, 2f )); // 12
+        vertices.Add(new Vector3( -2f, 5f, 2f )); // 13
+        vertices.Add(new Vector3( 4f, 5f, 2f )); // 14
+        vertices.Add(new Vector3( 1f, 8f, 2f )); // 15
     }
 
     void defineFaces()
@@ -51,12 +51,30 @@ public class Pipeline_Initials
         faces.Add(new Vector3Int(1, 3, 4));
         
         //Back Face
-        faces.Add(new Vector3Int(8, 14, 15));
-        faces.Add(new Vector3Int(8, 13, 14));
-        faces.Add(new Vector3Int(8, 9, 13));
-        faces.Add(new Vector3Int(9, 12, 13));
-        faces.Add(new Vector3Int(9, 10, 11));
-        faces.Add(new Vector3Int(9, 11, 12));
+        faces.Add(new Vector3Int(8, 15, 14));
+        faces.Add(new Vector3Int(8, 14, 13));
+        faces.Add(new Vector3Int(8, 13, 9));
+        faces.Add(new Vector3Int(9, 13, 12));
+        faces.Add(new Vector3Int(9, 11, 10));
+        faces.Add(new Vector3Int(9, 12, 11));
+        
+        //Side Faces
+        faces.Add(new Vector3Int(4, 13, 5));
+        faces.Add(new Vector3Int(4, 12, 13));
+        faces.Add(new Vector3Int(5, 14, 6));
+        faces.Add(new Vector3Int(5, 13, 14));
+        faces.Add(new Vector3Int(3, 12, 4));
+        faces.Add(new Vector3Int(3, 11, 12));
+        faces.Add(new Vector3Int(2, 11, 3));
+        faces.Add(new Vector3Int(2, 10, 11));
+        faces.Add(new Vector3Int(1, 9, 10));
+        faces.Add(new Vector3Int(1, 10, 2));
+        faces.Add(new Vector3Int(0, 8, 9));
+        faces.Add(new Vector3Int(0, 9, 1));
+        faces.Add(new Vector3Int(6, 14, 15));
+        faces.Add(new Vector3Int(6, 15, 7));
+        faces.Add(new Vector3Int(7, 15, 8));
+        faces.Add(new Vector3Int(7, 8, 0));
     }
     
     public GameObject CreateUnityGameObject()

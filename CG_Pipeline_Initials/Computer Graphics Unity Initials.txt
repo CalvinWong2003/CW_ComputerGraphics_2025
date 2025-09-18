@@ -1,0 +1,43 @@
+Computer Graphics: Unity Initials
+
+Texture coordinates:
+Red Texture (in pixels):
+0: 77,330px
+1: 180,330px
+2: 180,303px
+3: 77,303px
+4: 23,290px
+5: 56,290px
+6: 23,140px
+7: 56,140px
+8: 79,103px
+9: 179,103px
+10: 79,133px
+11: 179,133px
+12: 241,265px
+13: 280,265px
+14: 241,175px
+15: 280,175px
+
+
+
+Indigo Texture (in pixels):
+Front Face
+16: 79,290px
+17: 179,290px
+18: 211,263px
+19: 111,263px
+20: 111,176px
+21: 211,176px
+22: 179,143px
+23: 79,143px
+
+Back Face
+24: 353,292px
+25: 318,265px
+26: 421,265px
+27: 421,178px
+28: 318,178px
+29: 353,145px
+30: 451,145px
+31: 451,292px
