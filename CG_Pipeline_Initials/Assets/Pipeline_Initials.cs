@@ -10,6 +10,7 @@ public class Pipeline_Initials
     {
         defineVertices();
         defineFaces();
+        defineTextureVertices();
         CreateUnityGameObject();
     }
     
@@ -75,6 +76,59 @@ public class Pipeline_Initials
         faces.Add(new Vector3Int(6, 15, 7));
         faces.Add(new Vector3Int(7, 15, 8));
         faces.Add(new Vector3Int(7, 8, 0));
+    }
+
+    void defineTextureVertices()
+    {
+        List<Vector2Int> textureVertexInt =  new List<Vector2Int>();
+        
+        textureVertexInt.Add(new Vector2Int(74, 330)); // 0
+        textureVertexInt.Add(new Vector2Int(179, 330)); // 1
+        textureVertexInt.Add(new Vector2Int(179, 304)); // 2
+        textureVertexInt.Add(new Vector2Int(74, 304)); // 3
+        
+        textureVertexInt.Add(new Vector2Int(23, 290)); // 4
+        textureVertexInt.Add(new Vector2Int(56, 304)); // 5
+        textureVertexInt.Add(new Vector2Int(23, 140)); // 6
+        textureVertexInt.Add(new Vector2Int(56, 140)); // 7
+        
+        textureVertexInt.Add(new Vector2Int(79, 103)); // 8
+        textureVertexInt.Add(new Vector2Int(178, 103)); // 9
+        textureVertexInt.Add(new Vector2Int(79, 133)); // 10
+        textureVertexInt.Add(new Vector2Int(178, 133)); // 11
+        
+        textureVertexInt.Add(new Vector2Int(241, 264)); // 12
+        textureVertexInt.Add(new Vector2Int(279, 264)); // 13
+        textureVertexInt.Add(new Vector2Int(241, 177)); // 14
+        textureVertexInt.Add(new Vector2Int(279, 177)); // 15
+        
+        textureVertexInt.Add(new Vector2Int(79, 290)); // 16
+        textureVertexInt.Add(new Vector2Int(179, 290)); // 17
+        textureVertexInt.Add(new Vector2Int(214, 263)); // 18
+        textureVertexInt.Add(new Vector2Int(111, 263)); // 19
+        textureVertexInt.Add(new Vector2Int(111, 177)); // 20
+        textureVertexInt.Add(new Vector2Int(214, 177)); // 21
+        textureVertexInt.Add(new Vector2Int(179, 144)); // 22
+        textureVertexInt.Add(new Vector2Int(79, 144)); // 23
+        
+        textureVertexInt.Add(new Vector2Int(352, 291)); // 24
+        textureVertexInt.Add(new Vector2Int(319, 265)); // 25
+        textureVertexInt.Add(new Vector2Int(420, 265)); // 26
+        textureVertexInt.Add(new Vector2Int(420, 178)); // 27
+        textureVertexInt.Add(new Vector2Int(317, 178)); // 28
+        textureVertexInt.Add(new Vector2Int(352, 146)); // 29
+        textureVertexInt.Add(new Vector2Int(452, 146)); // 30
+        textureVertexInt.Add(new Vector2Int(452, 292)); // 31
+        
+        textureVertexInt.Add(new Vector2Int(241, 125)); // 32
+        textureVertexInt.Add(new Vector2Int(280, 125)); // 33
+        textureVertexInt.Add(new Vector2Int(280, 162)); // 34
+        textureVertexInt.Add(new Vector2Int(241, 162)); // 35
+        
+        textureVertexInt.Add(new Vector2Int(112, 353)); // 36
+        textureVertexInt.Add(new Vector2Int(208, 353)); // 37
+        textureVertexInt.Add(new Vector2Int(208, 380)); // 38
+        textureVertexInt.Add(new Vector2Int(112, 380)); // 39
     }
     
     public GameObject CreateUnityGameObject()
