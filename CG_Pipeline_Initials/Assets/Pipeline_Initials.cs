@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Pipeline_Initials
 {
-    List<Vector3> vertices;
+    internal List<Vector3> vertices;
     List<Vector3Int> faces;
     private List<Vector3Int> texture_index_list;
     private List<Vector2> texture_coordinates;
@@ -51,38 +51,41 @@ public class Pipeline_Initials
         normals = new List<Vector3>();
         
         //Front face
-        faces.Add(new Vector3Int(0, 6, 7)); texture_index_list.Add(new Vector3Int(23, 21, 22)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(0, 5, 6)); texture_index_list.Add(new Vector3Int(23, 20, 21)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(0, 1, 5)); texture_index_list.Add(new Vector3Int(23, 16, 20)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(1, 4, 5)); texture_index_list.Add(new Vector3Int(16, 19, 20)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(1, 2, 3)); texture_index_list.Add(new Vector3Int(16, 17, 18)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(1, 3, 4)); texture_index_list.Add(new Vector3Int(16, 18, 19)); normals.Add(new Vector3Int(0, 0, 1));
-        
+        faces.Add(new Vector3Int(0, 6, 7)); texture_index_list.Add(new Vector3Int(23, 21, 22)); normals.Add(new Vector3(0, 0, 1));
+        faces.Add(new Vector3Int(0, 5, 6)); texture_index_list.Add(new Vector3Int(23, 20, 21)); normals.Add(new Vector3(0, 0, 1));
+        faces.Add(new Vector3Int(0, 1, 5)); texture_index_list.Add(new Vector3Int(23, 16, 20)); normals.Add(new Vector3(0, 0, 1));
+        faces.Add(new Vector3Int(1, 4, 5)); texture_index_list.Add(new Vector3Int(16, 19, 20)); normals.Add(new Vector3(0, 0, 1));
+        faces.Add(new Vector3Int(1, 2, 3)); texture_index_list.Add(new Vector3Int(16, 17, 18)); normals.Add(new Vector3(0, 0, 1));
+        faces.Add(new Vector3Int(1, 3, 4)); texture_index_list.Add(new Vector3Int(16, 18, 19)); normals.Add(new Vector3(0, 0, 1));
+        //
+        //new Vector3Int(30, 27, 26)
         //Back Face
-        faces.Add(new Vector3Int(8, 15, 14)); texture_index_list.Add(new Vector3Int(30, 29, 28)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(8, 14, 13)); texture_index_list.Add(new Vector3Int(30, 28, 27)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(8, 13, 9)); texture_index_list.Add(new Vector3Int(30, 27, 26)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(9, 13, 12)); texture_index_list.Add(new Vector3Int(31, 27, 26)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(9, 11, 10)); texture_index_list.Add(new Vector3Int(31, 25, 24)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(9, 12, 11)); texture_index_list.Add(new Vector3Int(31, 26, 25)); normals.Add(new Vector3Int(0, 0, 1));
+        faces.Add(new Vector3Int(8, 15, 14)); texture_index_list.Add(new Vector3Int(30, 29, 28)); normals.Add(new Vector3(0, 0, -1));
+        faces.Add(new Vector3Int(8, 14, 13)); texture_index_list.Add(new Vector3Int(30, 28, 27)); normals.Add(new Vector3(0, 0, -1));
+        faces.Add(new Vector3Int(8, 13, 9)); texture_index_list.Add(new Vector3Int(26, 30, 27)); normals.Add(new Vector3(0, 0, -1));
+        faces.Add(new Vector3Int(9, 13, 12)); texture_index_list.Add(new Vector3Int(31, 27, 26)); normals.Add(new Vector3(0, 0, -1));
+        faces.Add(new Vector3Int(9, 11, 10)); texture_index_list.Add(new Vector3Int(31, 25, 24)); normals.Add(new Vector3(0, 0, -1));
+        faces.Add(new Vector3Int(9, 12, 11)); texture_index_list.Add(new Vector3Int(31, 26, 25)); normals.Add(new Vector3(0, 0, -1));
         
         //Side Faces
-        faces.Add(new Vector3Int(4, 13, 5)); texture_index_list.Add(new Vector3Int(12, 15, 14)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(4, 12, 13)); texture_index_list.Add(new Vector3Int(12, 13, 15)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(5, 14, 6)); texture_index_list.Add(new Vector3Int(40, 42, 41)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(5, 13, 14)); texture_index_list.Add(new Vector3Int(40, 43, 42)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(3, 12, 4)); texture_index_list.Add(new Vector3Int(38, 36, 39)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(3, 11, 12)); texture_index_list.Add(new Vector3Int(38, 37, 36)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(2, 11, 3)); texture_index_list.Add(new Vector3Int(47, 45, 44)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(2, 10, 11)); texture_index_list.Add(new Vector3Int(47, 46, 45)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(1, 9, 10)); texture_index_list.Add(new Vector3Int(0, 3, 2)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(1, 10, 2)); texture_index_list.Add(new Vector3Int(0, 2, 1)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(0, 8, 9)); texture_index_list.Add(new Vector3Int(7, 6, 4)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(0, 9, 1)); texture_index_list.Add(new Vector3Int(7, 4, 5)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(6, 14, 15)); texture_index_list.Add(new Vector3Int(35, 34, 33)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(6, 15, 7)); texture_index_list.Add(new Vector3Int(35, 33, 32)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(7, 15, 8)); texture_index_list.Add(new Vector3Int(11, 9, 8)); normals.Add(new Vector3Int(0, 0, 1));
-        faces.Add(new Vector3Int(7, 8, 0)); texture_index_list.Add(new Vector3Int(11, 8, 10)); normals.Add(new Vector3Int(0, 0, 1));
+        faces.Add(new Vector3Int(4, 13, 5)); texture_index_list.Add(new Vector3Int(12, 15, 14)); normals.Add(new Vector3(1, 0, 0));
+        faces.Add(new Vector3Int(4, 12, 13)); texture_index_list.Add(new Vector3Int(12, 13, 15)); normals.Add(new Vector3(1, 0, 0));
+        faces.Add(new Vector3Int(5, 14, 6)); texture_index_list.Add(new Vector3Int(40, 42, 41)); normals.Add(new Vector3(0, -1, 0));
+        faces.Add(new Vector3Int(5, 13, 14)); texture_index_list.Add(new Vector3Int(40, 43, 42)); normals.Add(new Vector3(0, -1, 0));
+        faces.Add(new Vector3Int(3, 12, 4)); texture_index_list.Add(new Vector3Int(38, 36, 39)); normals.Add(new Vector3(0, 1, 0));
+        faces.Add(new Vector3Int(3, 11, 12)); texture_index_list.Add(new Vector3Int(38, 37, 36)); normals.Add(new Vector3(0, 1, 0));
+        faces.Add(new Vector3Int(2, 11, 3)); texture_index_list.Add(new Vector3Int(47, 45, 44)); normals.Add((new Vector3(1, -1, 0).normalized));
+        faces.Add(new Vector3Int(2, 10, 11)); texture_index_list.Add(new Vector3Int(47, 46, 45)); normals.Add((new Vector3(1, -1, 0).normalized));
+        faces.Add(new Vector3Int(1, 9, 10)); texture_index_list.Add(new Vector3Int(0, 3, 2)); normals.Add(new Vector3(0, -1, 0));
+        faces.Add(new Vector3Int(1, 10, 2)); texture_index_list.Add(new Vector3Int(0, 2, 1)); normals.Add(new Vector3(0, -1, 0));
+        
+        faces.Add(new Vector3Int(0, 8, 9)); texture_index_list.Add(new Vector3Int(7, 6, 4)); normals.Add(new Vector3(-1, 0, 0));
+        faces.Add(new Vector3Int(0, 9, 1)); texture_index_list.Add(new Vector3Int(7, 4, 5)); normals.Add(new Vector3(-1, 0, 0));
+        
+        faces.Add(new Vector3Int(6, 14, 15)); texture_index_list.Add(new Vector3Int(35, 34, 33)); normals.Add((new Vector3(1, 1, 0).normalized));
+        faces.Add(new Vector3Int(6, 15, 7)); texture_index_list.Add(new Vector3Int(35, 33, 32)); normals.Add((new Vector3(1, 1, 0).normalized));
+        faces.Add(new Vector3Int(7, 15, 8)); texture_index_list.Add(new Vector3Int(11, 9, 8)); normals.Add(new Vector3(0, 1, 0));
+        faces.Add(new Vector3Int(7, 8, 0)); texture_index_list.Add(new Vector3Int(11, 8, 10)); normals.Add(new Vector3(0, 1, 0));
     }
 
     void defineTextureVertices()
@@ -95,7 +98,7 @@ public class Pipeline_Initials
         textureVertexInt.Add(new Vector2Int(74, 304)); // 3
         
         textureVertexInt.Add(new Vector2Int(23, 290)); // 4
-        textureVertexInt.Add(new Vector2Int(56, 304)); // 5
+        textureVertexInt.Add(new Vector2Int(56, 290)); // 5
         textureVertexInt.Add(new Vector2Int(23, 140)); // 6
         textureVertexInt.Add(new Vector2Int(56, 140)); // 7
         
@@ -118,7 +121,7 @@ public class Pipeline_Initials
         textureVertexInt.Add(new Vector2Int(179, 144)); // 22
         textureVertexInt.Add(new Vector2Int(79, 144)); // 23
         
-        textureVertexInt.Add(new Vector2Int(352, 291)); // 24
+        textureVertexInt.Add(new Vector2Int(352, 292)); // 24
         textureVertexInt.Add(new Vector2Int(319, 265)); // 25
         textureVertexInt.Add(new Vector2Int(420, 265)); // 26
         textureVertexInt.Add(new Vector2Int(420, 178)); // 27
