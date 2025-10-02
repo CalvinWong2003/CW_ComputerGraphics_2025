@@ -40,8 +40,6 @@ public class Pipeline_Initials
         vertices.Add(new Vector3( -2f, 5f, 2f )); // 13
         vertices.Add(new Vector3( 4f, 5f, 2f )); // 14
         vertices.Add(new Vector3( 1f, 8f, 2f )); // 15
-
-    
     }
 
     void defineFaces()
@@ -57,8 +55,7 @@ public class Pipeline_Initials
         faces.Add(new Vector3Int(1, 4, 5)); texture_index_list.Add(new Vector3Int(16, 19, 20)); normals.Add(new Vector3(0, 0, 1));
         faces.Add(new Vector3Int(1, 2, 3)); texture_index_list.Add(new Vector3Int(16, 17, 18)); normals.Add(new Vector3(0, 0, 1));
         faces.Add(new Vector3Int(1, 3, 4)); texture_index_list.Add(new Vector3Int(16, 18, 19)); normals.Add(new Vector3(0, 0, 1));
-        //
-        //new Vector3Int(30, 27, 26)
+
         //Back Face
         faces.Add(new Vector3Int(8, 15, 14)); texture_index_list.Add(new Vector3Int(30, 29, 28)); normals.Add(new Vector3(0, 0, -1));
         faces.Add(new Vector3Int(8, 14, 13)); texture_index_list.Add(new Vector3Int(30, 28, 27)); normals.Add(new Vector3(0, 0, -1));
