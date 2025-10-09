@@ -30,8 +30,29 @@ public class Graphics_Pipeline : MonoBehaviour
         List<Vector4> imageAfterScale = applyTransformation(imageAfterRotation, scaleMatrix);
         writeVectorstoFile(imageAfterScale, "imageAfterScaleMatrix", " ----- ");
         
-        Matrix4x4 viewingMatrix = Matrix4x4.LookAt(Vector3.zero, Vector3.zero, Vector3.up);
+        Matrix4x4 translationMatrix =  Matrix4x4.TRS(new Vector3(4, -5, -2), Quaternion.identity, Vector3.one);
+        writeMatrixtoFile(translationMatrix, "translationMatrix", " ----- ");
+        
+        List<Vector4> imageAfterTranslation = applyTransformation(imageAfterScale, translationMatrix);
+        writeVectorstoFile(imageAfterTranslation, "imageAfterTranslationMatrix", " ----- ");
+
+        Matrix4x4 Mot = translationMatrix * scaleMatrix * rotation;
+        writeMatrixtoFile(Mot, "Single Matrix of transformation", " ----- ");
+        
+        List<Vector4> imageAfterMot = applyTransformation(verts, Mot);
+        writeVectorstoFile(imageAfterMot, "imageAfterTransformation", " ----- ");
+        
+        Vector3 cameraPosition = new Vector3(21, 0, 47);
+        Vector3 lookAtCoord = new Vector3(-3, 19, 3).normalized;
+        Vector3 cameraUpPosition = new Vector3(-2, -3, 19).normalized;
+        Matrix4x4 viewingMatrix = Matrix4x4.LookAt(cameraPosition, lookAtCoord, cameraUpPosition);
+        writeMatrixtoFile(viewingMatrix, "viewingMatrix", " ----- ");
+        
+        List<Vector4> imageAfterViewing = applyTransformation(verts, viewingMatrix);
+        writeVectorstoFile(imageAfterViewing, "imageAfterViewing", " ----- ");
+        
         Matrix4x4 projectionMatrix = Matrix4x4.Perspective(90, 1, 1, 1000);
+        writeMatrixtoFile(projectionMatrix, "projectionMatrix", " ----- ");
         
         writer.Close(); // Close the writer to release the file
     }
@@ -57,12 +78,12 @@ public class Graphics_Pipeline : MonoBehaviour
         writer.WriteLine(after);
     }
 
-    private List<Vector4> applyTransformation(List<Vector4> verts, Matrix4x4 rotation)
+    private List<Vector4> applyTransformation(List<Vector4> verts, Matrix4x4 m)
     {
         List<Vector4> result = new List<Vector4>();
         foreach (Vector4 v in verts)
         {
-            result.Add(rotation * v);
+            result.Add(m * v);
         }
         return result;
     }
