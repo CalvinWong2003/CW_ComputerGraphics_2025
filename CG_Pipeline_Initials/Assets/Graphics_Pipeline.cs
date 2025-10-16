@@ -48,11 +48,20 @@ public class Graphics_Pipeline : MonoBehaviour
         Matrix4x4 viewingMatrix = Matrix4x4.LookAt(cameraPosition, lookAtCoord, cameraUpPosition);
         writeMatrixtoFile(viewingMatrix, "viewingMatrix", " ----- ");
         
-        List<Vector4> imageAfterViewing = applyTransformation(verts, viewingMatrix);
+        List<Vector4> imageAfterViewing = applyTransformation(imageAfterTranslation, viewingMatrix);
         writeVectorstoFile(imageAfterViewing, "imageAfterViewing", " ----- ");
         
         Matrix4x4 projectionMatrix = Matrix4x4.Perspective(90, 1, 1, 1000);
         writeMatrixtoFile(projectionMatrix, "projectionMatrix", " ----- ");
+
+        List<Vector4> imageAfterProjection = applyTransformation(imageAfterViewing, projectionMatrix);
+        writeVectorstoFile(imageAfterProjection, "imageAfterProjection", " ----- ");
+
+        Matrix4x4 MoE = projectionMatrix * viewingMatrix * Mot;
+        writeMatrixtoFile(MoE, "Single Matrix of Everything", " ----- ");
+
+        List<Vector4> imageAfterMoE = applyTransformation(verts, MoE);
+        writeVectorstoFile(imageAfterMoE, "Image after MoE", " ----- ");
         
         writer.Close(); // Close the writer to release the file
     }
