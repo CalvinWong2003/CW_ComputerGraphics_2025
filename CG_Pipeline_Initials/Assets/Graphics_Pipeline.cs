@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -105,6 +106,54 @@ public class Graphics_Pipeline : MonoBehaviour
             result.Add(new Vector4(v.x, v.y, v.z, 1.0f));
         }
         return result;
+    }
+
+    public static bool LineClip(ref Vector2 start, ref Vector2 end)
+    {
+        OutCode startoc = new OutCode(start);
+        OutCode endoc = new OutCode(end);
+        OutCode inViewport = new OutCode();
+
+        //Test for Trivial Acceptance is true if both points in viewport i.e. have 0000 as Outcode
+        if ((startoc + endoc) == inViewport)
+        {
+            return true;
+        }
+
+        //Test for Trivial Rejection is false if both points are not in viewport i.e. have 0100 or 0010 as Outcode
+        if ((startoc * endoc) != inViewport)
+        {
+            return false;
+        }
+        return false;
+    }
+
+    Vector2 Intercept(Vector2 start, Vector2 end, int edgeIndex)
+    {
+        if (end.x != start.x)
+        {
+            float m = (end.y - start.y) / (end.x - start.x);
+
+            switch (edgeIndex)
+            {
+                case 0: //Top edge y = 1 what's x
+                    //x = x1 + (1/m) * (y - y1)
+                    break;
+                case 1: //Bottom edge y = -1 what's x
+                    break;
+                case 2: //Left edge x = 1 what's y
+                    break;
+                default: //Right edge x = -1 what's y
+                    float y = (start.y + m) * (1 - start.x);
+                    return new Vector2(1, y);
+                    break;
+            }
+        }
+        else
+        {
+
+        }
+        return Intercept(start, end, edgeIndex);
     }
 
     // Update is called once per frame
