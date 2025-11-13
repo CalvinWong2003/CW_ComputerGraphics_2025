@@ -66,13 +66,20 @@ public class Graphics_Pipeline : MonoBehaviour
         
         writer.Close(); // Close the writer to release the file
         */
-        Vector2 s = new Vector2(1.3f, -2.4f);
-        Vector2 e = new Vector2(1.3f, 0.5f);
-        print(Intercept(s, e, 0));
-        print(Intercept(s, e, 1));
-        print(Intercept(s, e, 2));
-        print(Intercept(s, e, 3));
-    
+        Vector2 s = new Vector2(0.43f, 0.12f);
+        Vector2 e = new Vector2(0.92f, 0.28f);
+
+        if(LineClip(ref s, ref e))
+        {
+            print(Intercept(s, e, 0));
+            print(Intercept(s, e, 1));
+            print(Intercept(s, e, 2));
+            print(Intercept(s, e, 3));
+        }
+        else
+        {
+            print("Line Rejected");
+        }
     }
 
     private void writeMatrixtoFile(Matrix4x4 m, string before, string after)
@@ -135,28 +142,27 @@ public class Graphics_Pipeline : MonoBehaviour
         }
 
         //Work to do
-
         Vector2 s = start;
         Vector2 t = end;
         if (startoc.up)
         {
             Vector2 s1 = Intercept(s, t, 0);
-            print(s1);
+            return LineClip(ref s1, ref t);
         }
         if (startoc.down)
         {
             Vector2 s2 = Intercept(s, t, 1);
-            print(s2);
+            return LineClip(ref s2, ref t);
         }
         if (startoc.left)
         {
             Vector2 s3 = Intercept(s, t, 2);
-            print(s3);
+            return LineClip(ref s3, ref t);
         }
         if (startoc.right)
         {
             Vector2 s4 = Intercept(s, t, 3);
-            print(s4);
+            return LineClip(ref s4, ref t);
         }
         return false;
     }
@@ -188,7 +194,6 @@ public class Graphics_Pipeline : MonoBehaviour
                             return new Vector2(float.NaN, float.NaN);
                         }
                     }
-                 
                 case 1: //Bottom edge y = -1 what's x
                     if (m != 0)
                     {
@@ -207,24 +212,21 @@ public class Graphics_Pipeline : MonoBehaviour
                             return new Vector2(float.NaN, float.NaN);
                         }
                     }
-                  
                 case 2: //Left edge x = -1 what's y
-                            float y = start.y + m * (-1 - start.x);
-                            return new Vector2(-1, y);
-                        default: //Right edge x = +1 what's y
-                            float y1 = start.y + m * (1 - start.x);
-                            return new Vector2(1, y1);
-                        }
+                    float y = start.y + m * (-1 - start.x);
+                    return new Vector2(-1, y);
+                default: //Right edge x = +1 what's y
+                    float y1 = start.y + m * (1 - start.x);
+                    return new Vector2(1, y1);
+            }
         }
         else
         {
             switch (edgeIndex)
             {
                 case 0: //Top edge y = 1 what's x
-
                     return new Vector2(start.x, 1);
                 case 1: //Bottom edge y = -1 what's x
-                
                     return new Vector2(start.x, -1);
                 case 2: //Left edge x = -1 what's y
                     if(start.x == -1)
@@ -236,7 +238,6 @@ public class Graphics_Pipeline : MonoBehaviour
                         print("No answer");
                         return new Vector2(float.NaN, float.NaN);
                     }
-                    break;
                 default: //Right edge x = +1 what's y
                     if (start.x == 1)
                     {
@@ -247,7 +248,6 @@ public class Graphics_Pipeline : MonoBehaviour
                         print("No answer");
                         return new Vector2(float.NaN, float.NaN);
                     }
-                   
             }
         }
       
