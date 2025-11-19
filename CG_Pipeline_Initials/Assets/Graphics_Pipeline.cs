@@ -66,20 +66,19 @@ public class Graphics_Pipeline : MonoBehaviour
         
         writer.Close(); // Close the writer to release the file
         */
-        Vector2 s = new Vector2(0.43f, 0.12f);
-        Vector2 e = new Vector2(0.92f, 0.28f);
+        Vector2 s = new Vector2(-1.43f, 0.12f);
+        Vector2 e = new Vector2(0.92f, 1.28f);
 
         if(LineClip(ref s, ref e))
         {
-            print(Intercept(s, e, 0));
-            print(Intercept(s, e, 1));
-            print(Intercept(s, e, 2));
-            print(Intercept(s, e, 3));
+            print(s.ToString() + e.ToString());
         }
         else
         {
             print("Line Rejected");
         }
+
+        bresenham(new Vector2Int(10, 12), new Vector2Int(17, 22));
     }
 
     private void writeMatrixtoFile(Matrix4x4 m, string before, string after)
@@ -141,28 +140,30 @@ public class Graphics_Pipeline : MonoBehaviour
             return false;
         }
 
+        if(startoc == inViewport)
+        {
+            return LineClip(ref end, ref start);
+        }
         //Work to do
-        Vector2 s = start;
-        Vector2 t = end;
         if (startoc.up)
         {
-            Vector2 s1 = Intercept(s, t, 0);
-            return LineClip(ref s1, ref t);
+            start = Intercept(start, end, 0);
+            return LineClip(ref start, ref end);
         }
         if (startoc.down)
         {
-            Vector2 s2 = Intercept(s, t, 1);
-            return LineClip(ref s2, ref t);
+            start = Intercept(start, end, 1);
+            return LineClip(ref start, ref end);
         }
         if (startoc.left)
         {
-            Vector2 s3 = Intercept(s, t, 2);
-            return LineClip(ref s3, ref t);
+            start = Intercept(start, end, 2);
+            return LineClip(ref start, ref end);
         }
         if (startoc.right)
         {
-            Vector2 s4 = Intercept(s, t, 3);
-            return LineClip(ref s4, ref t);
+            start = Intercept(start, end, 3);
+            return LineClip(ref start, ref end);
         }
         return false;
     }
@@ -251,6 +252,39 @@ public class Graphics_Pipeline : MonoBehaviour
             }
         }
       
+    }
+
+
+    List<Vector2Int> bresenham(Vector2Int start, Vector2Int end)
+    {
+        int dx = end.x - start.x;
+        int dy = end.y - start.y;
+        int dyminusdx = dy - dx;
+        int neg = 2 * dyminusdx;
+        int pos = 2 * dy;
+        int p = 2 * dy - dx;
+
+        List<Vector2Int> linePoints = new List<Vector2Int>();
+        int y = start.y;
+
+        linePoints.Add(start);
+        for(int x = start.x + 1; x <= end.x; x++)
+        {
+            if(p < 0)
+            {
+                //y stays the same
+                p += pos;
+
+            }
+            else
+            {
+                y += 1;
+                p += neg;
+            }
+            linePoints.Add(new Vector2Int(x,y));
+        }
+
+        return linePoints;
     }
 
     // Update is called once per frame
