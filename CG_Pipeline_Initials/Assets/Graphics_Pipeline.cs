@@ -78,7 +78,7 @@ public class Graphics_Pipeline : MonoBehaviour
             print("Line Rejected");
         }
 
-        bresenham(new Vector2Int(10, 12), new Vector2Int(17, 22));
+        List<Vector2Int> linePoints = bresenham(new Vector2Int(15, 20), new Vector2Int(23, 30)); ;
     }
 
     private void writeMatrixtoFile(Matrix4x4 m, string before, string after)
@@ -258,11 +258,28 @@ public class Graphics_Pipeline : MonoBehaviour
     List<Vector2Int> bresenham(Vector2Int start, Vector2Int end)
     {
         int dx = end.x - start.x;
+
+        if(dx < 0)
+        {
+            return bresenham(end,start);
+        }
+
         int dy = end.y - start.y;
+
+        if(dy < 0)
+        {
+            return NegY(bresenham(NegY(start), NegY(end)));
+        }
+        if(dy > dx)
+        {
+            return SwapXY(bresenham(SwapXY(start), SwapXY(end)));
+        }
         int dyminusdx = dy - dx;
         int neg = 2 * dyminusdx;
         int pos = 2 * dy;
         int p = 2 * dy - dx;
+
+
 
         List<Vector2Int> linePoints = new List<Vector2Int>();
         int y = start.y;
@@ -286,6 +303,38 @@ public class Graphics_Pipeline : MonoBehaviour
 
         return linePoints;
     }
+
+    private Vector2Int SwapXY(Vector2Int v)
+    {
+        return new Vector2Int(v.y, v.x);
+    }
+
+    private List<Vector2Int> SwapXY(List<Vector2Int> s)
+    {
+        List<Vector2Int> hold = new List<Vector2Int>();
+        foreach (Vector2Int v in s)
+        {
+            hold.Add(SwapXY(v));
+        }
+        return hold;
+    }
+
+    private List<Vector2Int> NegY(List<Vector2Int> vector2Ints)
+    {
+        List<Vector2Int> hold = new List<Vector2Int>();
+        foreach (Vector2Int v in vector2Ints)
+        {
+            hold.Add(NegY(v));
+        }
+        return hold;
+    }
+
+    private Vector2Int NegY(Vector2Int v)
+    {
+        return new Vector2Int(v.x, v.y * - 1);
+    }
+
+
 
     // Update is called once per frame
     void Update()
