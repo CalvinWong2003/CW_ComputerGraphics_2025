@@ -5,7 +5,7 @@ using UnityEngine;
 public class Pipeline_Initials
 {
     internal List<Vector3> vertices;
-    List<Vector3Int> faces;
+    internal List<Vector3Int> faces;
     private List<Vector3Int> texture_index_list;
     private List<Vector2> texture_coordinates;
     List<Vector3> normals;
@@ -14,7 +14,7 @@ public class Pipeline_Initials
         defineVertices();
         defineFaces();
         defineTextureVertices();
-        CreateUnityGameObject();
+       // CreateUnityGameObject();
     }
     
     void defineVertices()

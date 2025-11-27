@@ -2,17 +2,30 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class Graphics_Pipeline : MonoBehaviour
 {
+    public GameObject screen;
+    Renderer myRenderer;
+    Texture2D texture;
+    public Color lineColor = Color.black;
+
+    Pipeline_Initials myModel;
+
     private StreamWriter writer;
     string filename = "output.txt";
+    private float angle;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
-    { /*
-        writer = new StreamWriter(filename, false); // 'false' means overwrite the file if it exists
-        Pipeline_Initials myModel = new Pipeline_Initials();
-        List<Vector3> verts3 = myModel.vertices;
+    {
+       // writer = new StreamWriter(filename, false); // 'false' means overwrite the file if it exists
+        myModel = new Pipeline_Initials();
+
+        /*List<Vector3> verts3 = myModel.vertices;
         List<Vector4> verts = convertToHomg(verts3);
 
         writeVectorstoFile(verts, "Vertices of my model", " ----- ");
@@ -78,7 +91,34 @@ public class Graphics_Pipeline : MonoBehaviour
             print("Line Rejected");
         }
 
-        List<Vector2Int> linePoints = bresenham(new Vector2Int(15, 20), new Vector2Int(23, 30)); ;
+    }
+
+ 
+
+    private List<Vector2Int> convertToPixels(List<Vector2> viewportPts, int v1, int v2)
+    {
+       List<Vector2Int> output = new List<Vector2Int>();
+        foreach (var p in viewportPts)
+        {
+            output.Add(convertToPixel(p, v1, v2));
+
+            
+        }
+        return output;
+    }
+
+    private Vector2Int convertToPixel(Vector2 p, int width, int height)
+    {
+        return new Vector2Int((int)((p.x + 1) * (width - 1) / 2), (int)((p.y + 1) * (height - 1) / 2));
+    }
+
+    private List<Vector2> projection(List<Vector4> ptsProj)
+    {
+       List<Vector2> output = new List<Vector2>();
+        foreach (var p in ptsProj)
+            output.Add(new  Vector2(p.x/p.z, p.y/p.z));
+
+        return output;
     }
 
     private void writeMatrixtoFile(Matrix4x4 m, string before, string after)
@@ -254,7 +294,6 @@ public class Graphics_Pipeline : MonoBehaviour
       
     }
 
-
     List<Vector2Int> bresenham(Vector2Int start, Vector2Int end)
     {
         int dx = end.x - start.x;
@@ -334,11 +373,75 @@ public class Graphics_Pipeline : MonoBehaviour
         return new Vector2Int(v.x, v.y * - 1);
     }
 
-
-
     // Update is called once per frame
     void Update()
     {
-        
+
+        List<Vector4> verts = convertToHomg(myModel.vertices);
+        angle += 1;
+        Matrix4x4 rotation = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(angle, Vector3.up), Vector3.one);
+        Matrix4x4 translation = Matrix4x4.TRS(new Vector3(0,0,5), Quaternion.identity, Vector3.one);
+        Matrix4x4 worldTransforms = rotation * translation;
+
+        Matrix4x4 viewingMatrix = Matrix4x4.LookAt(new Vector3(0, 0, 10), Vector3.zero, Vector3.up);
+
+        Matrix4x4 projectionMatrix = Matrix4x4.Perspective(90, 1, 1, 1000);
+
+
+        Matrix4x4 superMatrix = projectionMatrix * viewingMatrix * worldTransforms;
+
+
+        List<Vector4> ptsProj = applyTransformation(verts, superMatrix);
+
+        List<Vector2> viewportPts = projection(ptsProj);
+
+        // need to Clip???
+
+        List<Vector2Int> pixelPts = convertToPixels(viewportPts, 512, 512);
+
+        texture = new Texture2D(512, 512);
+        foreach (Vector3Int face in myModel.faces)
+
+        {
+
+
+            Vector2 v1 = viewportPts[face.x], v2 = viewportPts[face.y], v3 = viewportPts[face.z];
+
+
+
+            drawLine(v1, v2, texture, Color.blue);
+            drawLine(v2, v3, texture, Color.blue);
+            drawLine(v3, v1, texture, Color.blue);
+
+        }
+        myRenderer = screen.GetComponent<Renderer>();
+
+
+
+
+
+
+        texture.Apply();
+        myRenderer.material.mainTexture = texture;
     }
+
+    private void drawLine(Vector2 v1, Vector2 v2, Texture2D texture, Color col)
+    {
+        // Clip the line
+
+        Vector2 start = v1;
+        Vector2 end = v2;
+
+        if (LineClip(ref start,ref end))
+        {
+            List<Vector2Int> points = bresenham(convertToPixel (start, texture.width,texture.height), convertToPixel( end, texture.width,texture.height) );
+            foreach (var p in points)
+            {
+                texture.SetPixel(p.x, p.y, col);
+            }
+
+        }
+    }
+
+
 }
