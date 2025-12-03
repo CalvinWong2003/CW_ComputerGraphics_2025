@@ -22,10 +22,10 @@ public class Graphics_Pipeline : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       // writer = new StreamWriter(filename, false); // 'false' means overwrite the file if it exists
+        writer = new StreamWriter(filename, false); // 'false' means overwrite the file if it exists
         myModel = new Pipeline_Initials();
 
-        /*List<Vector3> verts3 = myModel.vertices;
+        List<Vector3> verts3 = myModel.vertices;
         List<Vector4> verts = convertToHomg(verts3);
 
         writeVectorstoFile(verts, "Vertices of my model", " ----- ");
@@ -78,7 +78,7 @@ public class Graphics_Pipeline : MonoBehaviour
         writeVectorstoFile(imageAfterMoE, "Image after MoE", " ----- ");
         
         writer.Close(); // Close the writer to release the file
-        */
+        
         Vector2 s = new Vector2(-1.43f, 0.12f);
         Vector2 e = new Vector2(0.92f, 1.28f);
 
@@ -90,10 +90,7 @@ public class Graphics_Pipeline : MonoBehaviour
         {
             print("Line Rejected");
         }
-
     }
-
- 
 
     private List<Vector2Int> convertToPixels(List<Vector2> viewportPts, int v1, int v2)
     {
@@ -318,8 +315,6 @@ public class Graphics_Pipeline : MonoBehaviour
         int pos = 2 * dy;
         int p = 2 * dy - dx;
 
-
-
         List<Vector2Int> linePoints = new List<Vector2Int>();
         int y = start.y;
 
@@ -376,7 +371,6 @@ public class Graphics_Pipeline : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
         List<Vector4> verts = convertToHomg(myModel.vertices);
         angle += 1;
         Matrix4x4 rotation = Matrix4x4.TRS(Vector3.zero, Quaternion.AngleAxis(angle, Vector3.up), Vector3.one);
@@ -387,27 +381,19 @@ public class Graphics_Pipeline : MonoBehaviour
 
         Matrix4x4 projectionMatrix = Matrix4x4.Perspective(90, 1, 1, 1000);
 
-
         Matrix4x4 superMatrix = projectionMatrix * viewingMatrix * worldTransforms;
-
 
         List<Vector4> ptsProj = applyTransformation(verts, superMatrix);
 
         List<Vector2> viewportPts = projection(ptsProj);
 
         // need to Clip???
-
         List<Vector2Int> pixelPts = convertToPixels(viewportPts, 512, 512);
 
         texture = new Texture2D(512, 512);
         foreach (Vector3Int face in myModel.faces)
-
         {
-
-
             Vector2 v1 = viewportPts[face.x], v2 = viewportPts[face.y], v3 = viewportPts[face.z];
-
-
 
             drawLine(v1, v2, texture, Color.blue);
             drawLine(v2, v3, texture, Color.blue);
@@ -415,12 +401,6 @@ public class Graphics_Pipeline : MonoBehaviour
 
         }
         myRenderer = screen.GetComponent<Renderer>();
-
-
-
-
-
-
         texture.Apply();
         myRenderer.material.mainTexture = texture;
     }
@@ -428,7 +408,6 @@ public class Graphics_Pipeline : MonoBehaviour
     private void drawLine(Vector2 v1, Vector2 v2, Texture2D texture, Color col)
     {
         // Clip the line
-
         Vector2 start = v1;
         Vector2 end = v2;
 
@@ -439,9 +418,6 @@ public class Graphics_Pipeline : MonoBehaviour
             {
                 texture.SetPixel(p.x, p.y, col);
             }
-
         }
     }
-
-
 }
