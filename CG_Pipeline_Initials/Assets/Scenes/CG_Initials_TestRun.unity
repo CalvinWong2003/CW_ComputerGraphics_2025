@@ -153,6 +153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screen: {fileID: 564051068}
   lineColor: {r: 0, g: 0, b: 0, a: 1}
+  texture_file: {fileID: 2800000, guid: d8c5c26b92b13e54a87eacb3e95f0765, type: 3}
 --- !u!114 &56892773
 MonoBehaviour:
   m_ObjectHideFlags: 0

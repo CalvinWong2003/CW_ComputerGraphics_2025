@@ -6,8 +6,8 @@ public class Pipeline_Initials
 {
     internal List<Vector3> vertices;
     internal List<Vector3Int> faces;
-    private List<Vector3Int> texture_index_list;
-    private List<Vector2> texture_coordinates;
+    internal List<Vector3Int> texture_index_list;
+    internal List<Vector2> texture_coordinates;
     List<Vector3> normals;
     public Pipeline_Initials()
     {

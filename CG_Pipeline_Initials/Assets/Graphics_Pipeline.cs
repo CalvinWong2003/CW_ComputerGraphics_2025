@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Experimental.GlobalIllumination;
 using UnityEngine.Rendering;
@@ -12,8 +13,10 @@ public class Graphics_Pipeline : MonoBehaviour
     Renderer myRenderer;
     Texture2D texture;
     public Color lineColor = Color.black;
+    public Texture2D texture_file;
 
     Pipeline_Initials myModel;
+    Pipeline_Initials texture_index_list;
 
     private StreamWriter writer;
     string filename = "output.txt";
@@ -400,6 +403,70 @@ public class Graphics_Pipeline : MonoBehaviour
             drawLine(v3, v1, texture, Color.blue);
 
         }
+
+        //Applying 2D textures to each face of the initial.
+        for (int i = 0; i < myModel.faces.Count; i++)
+        {
+            // --- FACE & UV INDEXING ---
+            Vector3Int face = myModel.faces[i];
+            Vector3Int texIndex = myModel.texture_index_list[i];
+
+            Vector2 a_t = myModel.texture_coordinates[texIndex.x];
+            Vector2 b_t = myModel.texture_coordinates[texIndex.y];
+            Vector2 c_t = myModel.texture_coordinates[texIndex.z];
+
+            // --- SCREEN COORDS (-1..+1) ---
+            Vector2 a_vp = viewportPts[face.x];
+            Vector2 b_vp = viewportPts[face.y];
+            Vector2 c_vp = viewportPts[face.z];
+
+            // --- PIXEL COORDS ---
+            Vector2Int a2 = convertToPixel(a_vp, texture.width, texture.height);
+            Vector2Int b2 = convertToPixel(b_vp, texture.width, texture.height);
+            Vector2Int c2 = convertToPixel(c_vp, texture.width, texture.height);
+
+            // --- TRIANGLE BOUNDS ---
+            int minX = Mathf.Max(0, Mathf.Min(a2.x, Mathf.Min(b2.x, c2.x)));
+            int maxX = Mathf.Min(texture.width - 1, Mathf.Max(a2.x, Mathf.Max(b2.x, c2.x)));
+            int minY = Mathf.Max(0, Mathf.Min(a2.y, Mathf.Min(b2.y, c2.y)));
+            int maxY = Mathf.Min(texture.height - 1, Mathf.Max(a2.y, Mathf.Max(b2.y, c2.y)));
+
+            // --- PRECOMPUTE AREA (DENOM) ---
+            float denom = (b2.x - a2.x) * (c2.y - a2.y) - (b2.y - a2.y) * (c2.x - a2.x);
+            if (Mathf.Abs(denom) < 0.0001f)
+                continue; // degenerate triangle
+
+
+            int start = -1;
+            int end = -1;
+
+            // --- TRIANGLE RASTERIZATION ---
+            for (int x = minX; x <= maxX; x++)
+            {
+                for (int y = minY; y <= maxY; y++)
+                {
+                    float px = x - a2.x;
+                    float py = y - a2.y;
+
+                    // barycentric r, s
+                    float r = (px * (c2.y - a2.y) - py * (c2.x - a2.x)) / denom;
+                    float s = ((b2.x - a2.x) * py - (b2.y - a2.y) * px) / denom;
+
+                    if (r >= 0 && s >= 0 && (r + s) <= 1)
+                    {
+
+                        RangeX.AddPoint(px);
+                        // UV interpolation (AFFINE)
+                        Vector2 uv = a_t + r * (b_t - a_t) + s * (c_t - a_t);
+                        uv *= 512; // your texture resolution
+
+                        Color col = texture_file.GetPixel((int)uv.x, (int)uv.y);
+                        texture.SetPixel(x, y, col);
+                    }
+                }
+            }
+        } //The result has slow rotation but shows the texture of the initials from the texture file
+        
         myRenderer = screen.GetComponent<Renderer>();
         texture.Apply();
         myRenderer.material.mainTexture = texture;
